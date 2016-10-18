@@ -142,6 +142,11 @@ cc_library_shared {
     ],
 
     product_variables: {
+        aosip: {
+            has_legacy_camera_hal1: {
+                cflags: [ "-DCAMCORDER_GRALLOC_SOURCE", ],
+            },
+        },
         debuggable: {
             // enable experiments only in userdebug and eng builds
             cflags: ["-DENABLE_STAGEFRIGHT_EXPERIMENTS"],
