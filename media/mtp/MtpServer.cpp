@@ -1051,6 +1051,10 @@ MtpResponseCode MtpServer::doSendObject() {
             }
 
             ALOGV("receiving %s\n", (const char *)mSendObjectFilePath);
+
+            mfr.command = 0;
+            mfr.transaction_id = 0;
+
             // transfer the file
             ret = ioctl(mFD, MTP_RECEIVE_FILE, (unsigned long)&mfr);
             if ((ret < 0) && (errno == ECANCELED)) {
@@ -1241,6 +1245,8 @@ MtpResponseCode MtpServer::doSendPartialObject() {
             mfr.fd = edit->mFD;
             mfr.offset = offset;
             mfr.length = length;
+            mfr.command = 0;
+            mfr.transaction_id = 0;
 
             // transfer the file
             ret = ioctl(mFD, MTP_RECEIVE_FILE, (unsigned long)&mfr);
