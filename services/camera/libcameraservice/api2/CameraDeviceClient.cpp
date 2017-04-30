@@ -554,6 +554,7 @@ binder::Status CameraDeviceClient::createStream(
                 " (%d x %d) with format 0x%x.",
               __FUNCTION__, mCameraId, streamId, width, height, format);
 
+#ifndef CAMERA_STREAM_NO_ROTATION
         // Set transform flags to ensure preview to be rotated correctly.
         res = setStreamTransformLocked(streamId);
 
