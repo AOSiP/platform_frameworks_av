@@ -592,7 +592,7 @@ protected:
 
         // Audio Policy Engine Interface.
         AudioPolicyManagerInterface *mEngine;
-private:
+protected:
         // Add or remove AC3 DTS encodings based on user preferences.
         void filterSurroundFormats(FormatVector *formatsPtr);
         void filterSurroundChannelMasks(ChannelsVector *channelMasksPtr);
