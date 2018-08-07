@@ -346,7 +346,6 @@ void ID3::removeUnsynchronization() {
     if (writeOffset < mSize) {
         mSize = writeOffset;
     }
-
 }
 
 static void WriteSyncsafeInteger(uint8_t *dst, size_t x) {
@@ -606,6 +605,9 @@ void ID3::Iterator::getstring(String8 *id, bool otherdata) const {
         // UCS-2
         // API wants number of characters, not number of bytes...
         int len = n / 2;
+        if (len == 0) {
+            return;
+        }
         const char16_t *framedata = (const char16_t *) (frameData + 1);
         char16_t *framedatacopy = NULL;
         if (*framedata == 0xfffe) {
