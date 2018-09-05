@@ -346,6 +346,7 @@ void ID3::removeUnsynchronization() {
     if (writeOffset < mSize) {
         mSize = writeOffset;
     }
+
 }
 
 static void WriteSyncsafeInteger(uint8_t *dst, size_t x) {
