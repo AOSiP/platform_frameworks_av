@@ -1,3 +1,4 @@
+
 # Copyright 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -99,6 +100,10 @@ LOCAL_EXPORT_C_INCLUDE_DIRS := \
     frameworks/av/services/camera/libcameraservice
 
 LOCAL_CFLAGS += -Wall -Wextra -Werror
+
+ifneq ($(TARGET_CAMERA_NEEDS_ADD_STATES_IN_ENUMERATE),)
+    LOCAL_CFLAGS += -DCAMERA_NEEDS_ADD_STATES_IN_ENUMERATE
+endif
 
 ifeq ($(TARGET_HAS_LEGACY_CAMERA_HAL1),true)
     LOCAL_CFLAGS += -DNO_CAMERA_SERVER
