@@ -89,6 +89,10 @@ LOCAL_SHARED_LIBRARIES += \
     vendor.qti.hardware.camera.device@1.0
 endif
 
+ifeq ($(TARGET_CAMERA_BOOTTIME_TIMESTAMP),true)
+LOCAL_CFLAGS += -DTARGET_CAMERA_BOOTTIME_TIMESTAMP
+endif
+
 LOCAL_EXPORT_SHARED_LIBRARY_HEADERS := libbinder libcamera_client libfmq
 
 LOCAL_C_INCLUDES += \
@@ -102,6 +106,10 @@ LOCAL_CFLAGS += -Wall -Wextra -Werror
 
 ifeq ($(TARGET_HAS_LEGACY_CAMERA_HAL1),true)
     LOCAL_CFLAGS += -DNO_CAMERA_SERVER
+endif
+
+ifeq ($(TARGET_CAMERA_NEEDS_CLIENT_INFO),true)
+LOCAL_CFLAGS += -DTARGET_NEEDS_CLIENT_INFO
 endif
 
 LOCAL_MODULE:= libcameraservice

@@ -24,6 +24,10 @@
 #include <cstring>
 #include <ctime>
 #include <string>
+#ifdef TARGET_NEEDS_CLIENT_INFO
+#include <iostream>
+#include <fstream>
+#endif
 #include <sys/types.h>
 #include <inttypes.h>
 #include <pthread.h>
@@ -1216,7 +1220,6 @@ Status CameraService::connect(
                 ret.toString8());
         return ret;
     }
-
     *device = client;
     return ret;
 }
@@ -2281,6 +2284,15 @@ status_t CameraService::BasicClient::startCameraOps() {
     sCameraService->updateProxyDeviceState(ICameraServiceProxy::CAMERA_STATE_OPEN,
             mCameraIdStr, mCameraFacing, mClientPackageName, apiLevel);
 
+#ifdef TARGET_NEEDS_CLIENT_INFO
+    std::ofstream cpf("/data/misc/camera/client_package_name");
+    std::string cpn = String8(mClientPackageName).string();
+    if (cpn.compare("com.oneplus.camera") == 0) {
+        cpf << "com.oneplus.camera";
+    } else {
+        cpf << "";
+    }
+#endif
     return OK;
 }
 
@@ -2465,7 +2477,7 @@ static const int64_t kPollUidActiveTimeoutMillis = 50;
 bool CameraService::UidPolicy::isUidActiveLocked(uid_t uid, String16 callingPackage) {
     // Non-app UIDs are considered always active
     // If activity manager is unreachable, assume everything is active
-    if (uid < FIRST_APPLICATION_UID || !mRegistered) {
+    if (uid < FIRST_APPLICATION_UID || !mRegistered || strcmp16(callingPackage, String16("com.android.facelock")) == 0) {
         return true;
     }
     auto it = mOverrideUids.find(uid);
