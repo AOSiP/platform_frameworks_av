@@ -1294,6 +1294,14 @@ Status CameraService::connectHelper(const sp<CALLBACK>& cameraCb, const String8&
         int api1CameraId, int halVersion, const String16& clientPackageName, int clientUid,
         int clientPid, apiLevel effectiveApiLevel, bool legacyMode, bool shimUpdateOnly,
         /*out*/sp<CLIENT>& device) {
+    char motor_bin[255];
+    property_get("persist.vendor.camera.motor_bin", motor_bin, "");
+    if (strcmp(motor_bin, "") != 0) {
+        char cmd[255];
+        sprintf(cmd, "%s %s %s", motor_bin, "connect", cameraId.string());
+        ALOGI("calling %s", cmd);
+        system(cmd);
+    }
     binder::Status ret = binder::Status::ok();
 
     String8 clientName8(clientPackageName);
@@ -2196,6 +2204,14 @@ CameraService::BasicClient::~BasicClient() {
 }
 
 binder::Status CameraService::BasicClient::disconnect() {
+    char motor_bin[255];
+    property_get("persist.vendor.camera.motor_bin", motor_bin, "");
+    if (strcmp(motor_bin, "") != 0) {
+        char cmd[255];
+        sprintf(cmd, "%s %s %s", motor_bin, "disconnect", mCameraIdStr.string());
+        ALOGI("calling %s", cmd);
+        system(cmd);
+    }
     binder::Status res = Status::ok();
     if (mDisconnected) {
         return res;
