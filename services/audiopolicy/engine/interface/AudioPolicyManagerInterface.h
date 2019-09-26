@@ -103,7 +103,13 @@ public:
      */
     virtual status_t setDeviceConnectionState(const android::sp<android::DeviceDescriptor> devDesc,
                                               audio_policy_dev_state_t state) = 0;
-
+     /**
+     * Set whether display-port is connected and is allowed to be used
+     * for voice usecases
+     *
+     * @param[i] connAndAllowed : if display is connected and can be used
+     */
+     virtual void setDpConnAndAllowedForVoice(bool connAndAllowed) = 0;
     /**
      * Get the strategy selected for a given audio attributes.
      *
