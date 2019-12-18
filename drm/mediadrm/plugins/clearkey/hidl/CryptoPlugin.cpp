@@ -101,6 +101,7 @@ Return<void> CryptoPlugin::decrypt(
             _hidl_cb(Status::ERROR_DRM_CANNOT_HANDLE, 0, "destination is a nullptr");
             return Void();
         }
+        base = static_cast<uint8_t *>(static_cast<void *>(destBase->getPointer()));
 
         if (destBuffer.offset + destBuffer.size > destBase->getSize()) {
             _hidl_cb(Status::ERROR_DRM_CANNOT_HANDLE, 0, "invalid buffer size");
