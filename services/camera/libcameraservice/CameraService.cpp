@@ -538,7 +538,6 @@ Status CameraService::getCameraCharacteristics(const String16& cameraId,
         return STATUS_ERROR_FMT(ERROR_DISCONNECTED,
                                 "No camera device with ID \"%s\" currently available",
                                 String8(cameraId).string());
-
     }
 
     Status ret{};
